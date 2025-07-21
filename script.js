@@ -1,6 +1,19 @@
 const grid = document.querySelector("#grid");
+const changeResolutionBtn = document.querySelector(".change-resolution");
+const changeWidthBtn = document.querySelector(".change-width");
+const changeColourBtn = document.querySelector(".change-colour")
+const colours = [{name: "Black", class: "black", colourFunction: () => {return "black"}},
+               {name: "RGB", class: "rgb", colourFunction() {return `rgb(${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)})`}}, 
+               {name: "Erase", class: "erase", colourFunction() {return "white"}}
+]
+
 let percentage = 70;
 let size = 16;
+let currentColour = 0;
+
+changeResolutionBtn.textContent += size;
+changeWidthBtn.textContent += percentage + "%";
+changeColourBtn.textContent += colours[currentColour % 3].name;
 
 window.addEventListener("resize", () => { 
   const allSquares = document.querySelectorAll(".square");
@@ -14,27 +27,31 @@ window.addEventListener("resize", () => {
 createGrid();
 setGridWidth();
 
-const changeSizeBtn = document.querySelector(".change-resolution");
-changeSizeBtn.addEventListener("click", () => {
+changeResolutionBtn.addEventListener("click", () => {
   let newSize = getUserInputNumber(1, 100, "number");
   if (newSize === null) return;
   size = newSize;
+  let text = changeResolutionBtn.textContent.split(": ");
+  text[1] = size;
+  changeResolutionBtn.textContent = text.join(": ");
+
+
   createGrid();
 });
 
 
-const changeWidthBtn = document.querySelector(".change-width");
 changeWidthBtn.addEventListener("click", () => {
-  percentage = getUserInputNumber(1, 100, "pecentage");
+  let newPercentage = getUserInputNumber(1, 100, "pecentage");
+  if (newPercentage === null) return;
+  percentage = newPercentage;
+  let text = changeWidthBtn.textContent.split(": ");
+  text[1] = percentage + "%";
+  changeWidthBtn.textContent = text.join(": ");
+
   setGridWidth();
 });
 
-const colours = [{name: "Black", class: "black", colourFunction: () => {return "black"}},
-               {name: "RGB", class: "rgb", colourFunction() {return `rgb(${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)})`}}, 
-               {name: "Erase", class: "erase", colourFunction() {return "white"}}
-]
-let currentColour = 0;
-const changeColourBtn = document.querySelector(".change-colour")
+
 changeColourBtn.addEventListener("click", () => {
   currentColour++;
 
