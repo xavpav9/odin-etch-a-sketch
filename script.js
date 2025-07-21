@@ -3,9 +3,12 @@ createGrid(16);
 
 const changeSizeBtn = document.querySelector(".change-size");
 changeSizeBtn.addEventListener("click", () => {
-  let newSize = prompt("Enter a new size, between 1 and 100");
-  while (newSize > 100 || newSize < 0) {
+  let newSize = 0;
+  while (newSize > 100 || newSize < 1 || isNaN(newSize)) {
     newSize = prompt("Enter a new size, between 1 and 100");
+    if (newSize === null || newSize === "") return;
+    newSize = +newSize;
+    console.log(newSize, typeof newSize);
   };
   createGrid(newSize);
 });
@@ -14,7 +17,6 @@ changeSizeBtn.addEventListener("click", () => {
 function createGrid(size) {
   while (grid.firstElementChild) grid.firstElementChild.remove();
   const newWidth = (100 / size).toString() + "vw";
-  console.log(newWidth);
   for (let o = 0; o < size; ++o) {
     const row = document.createElement("div");
     row.setAttribute("class", "row");
