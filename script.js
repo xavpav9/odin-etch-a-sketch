@@ -1,18 +1,32 @@
 const grid = document.querySelector("#grid");
-createGrid(16);
+let size = 16;
+createGrid(size);
 
-const changeSizeBtn = document.querySelector(".change-size");
+const changeSizeBtn = document.querySelector(".change-resolution");
 changeSizeBtn.addEventListener("click", () => {
-  let newSize = 0;
-  while (newSize > 100 || newSize < 1 || isNaN(newSize)) {
-    newSize = prompt("Enter a new size, between 1 and 100");
-    if (newSize === null || newSize === "") return;
-    newSize = +newSize;
-    console.log(newSize, typeof newSize);
-  };
-  createGrid(newSize);
+  size = getUserInputNumber(1, 100, "number");
+  if (size === null) return;
+  createGrid(size);
 });
 
+window.addEventListener("resize", () => { 
+  const allSquares = document.querySelectorAll(".square");
+  allSquares.forEach(square => {
+    const newWidth = (grid.clientWidth / size).toString() + "px";
+    square.style.width = newWidth;
+    square.style.height = newWidth;
+  })
+});
+function getUserInputNumber(low, high, display) {
+  let num = NaN;
+  while (num > high || num < low || isNaN(num)) {
+    num = prompt(`Enter a ${display} between ${low} and ${high}.`);
+    if (num === null || num === "") return null;
+    num = +num;
+    console.log(num, typeof num);
+  };
+  return num;
+};
 
 function createGrid(size) {
   while (grid.firstElementChild) grid.firstElementChild.remove();
