@@ -1,7 +1,6 @@
 const grid = document.querySelector("#grid");
 let percentage = 70;
 let size = 16;
-let colour = () => "black";
 
 window.addEventListener("resize", () => { 
   const allSquares = document.querySelectorAll(".square");
@@ -30,18 +29,20 @@ changeWidthBtn.addEventListener("click", () => {
   setGridWidth();
 });
 
+const colours = [{name: "Black", class: "black", colourFunction: () => {return "black"}},
+               {name: "RGB", class: "rgb", colourFunction() {return `rgb(${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)})`}}, 
+               {name: "Erase", class: "erase", colourFunction() {return "white"}}
+]
+let currentColour = 0;
 const changeColourBtn = document.querySelector(".change-colour")
-let changeColour = false;
 changeColourBtn.addEventListener("click", () => {
-  changeColour = true;
+  currentColour++;
 
-  const currentColour = changeColourBtn.textContent.split(" "); 
-  changeColourBtn.classList.toggle("black");
-  changeColourBtn.classList.toggle("rgb");
-  currentColour[1] = (currentColour[1] === "Black") ? "RGB" : "Black";
-  changeColourBtn.textContent = currentColour.join(" ");
+  changeColourBtn.classList.remove(colours[(currentColour + colours.length - 1) % colours.length].class);
+  changeColourBtn.classList.add(colours[currentColour % colours.length].class);
 
-  colour = () => (currentColour[1] === "Black") ? "black" : `rgb(${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)})`;
+  let changeColourBtnText = changeColourBtn.textContent.split(" ")[0] + " " + colours[currentColour % colours.length].name;
+  changeColourBtn.textContent =  changeColourBtnText; 
 });
 
 function getUserInputNumber(low, high, display) {
@@ -65,7 +66,7 @@ function createGrid() {
       square.setAttribute("class", "square");
       square.style.width = newWidth;
       square.style.height = newWidth;
-      square.addEventListener("mouseenter", evt => evt.target.style.backgroundColor = colour());
+      square.addEventListener("mouseenter", evt => evt.target.style.backgroundColor = colours[currentColour % colours.length].colourFunction());
       row.appendChild(square);
     };
     grid.appendChild(row);
