@@ -10,10 +10,11 @@ body {
 
 .square {
   background-color: white;
+  flex: 0 0 auto;
 }
 
 #grid {
-  margin: 100px;
+  margin: auto;
 }
 
 #options {
