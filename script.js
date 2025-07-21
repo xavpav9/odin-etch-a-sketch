@@ -16,7 +16,7 @@ changeSizeBtn.addEventListener("click", () => {
 
 function createGrid(size) {
   while (grid.firstElementChild) grid.firstElementChild.remove();
-  const newWidth = (100 / size).toString() + "vw";
+  const newWidth = (grid.clientWidth / size).toString() + "px";
   for (let o = 0; o < size; ++o) {
     const row = document.createElement("div");
     row.setAttribute("class", "row");

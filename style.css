@@ -1,3 +1,7 @@
+body {
+  background-color: wheat;
+}
+
 .row {
   display: flex;
   justify-content: center;
@@ -5,9 +9,11 @@
 }
 
 .square {
+  background-color: white;
 }
 
 #grid {
+  margin: 100px;
 }
 
 #options {
