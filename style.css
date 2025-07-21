@@ -27,3 +27,19 @@ body {
 #header {
   text-align: center;
 }
+
+button {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.black {
+  color: white;
+  background-color: black;
+}
+
+.rgb {
+  color: black;
+  background-image: url("./images/rgb.gif");
+}
