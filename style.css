@@ -5,6 +5,9 @@
 }
 
 .square {
-  width: 6vw;
-  height: 6vw;
+}
+
+.change-size {
+  display: block;
+  margin-bottom: 20px;
 }
