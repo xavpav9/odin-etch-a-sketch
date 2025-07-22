@@ -70,7 +70,10 @@ changeColourBtn.addEventListener("click", () => {
   changeColourBtn.textContent =  changeColourBtnText; 
 });
 
-clearScreenBtn.addEventListener("click", createGrid);
+clearScreenBtn.addEventListener("click", () => {
+  let clearScreen = confirm("Are you sure that you want to clear the screen?");
+  if (clearScreen) createGrid();
+});
 
 changeEffectBtn.addEventListener("click", () => {
   currentEffect++;
