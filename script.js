@@ -10,6 +10,7 @@ const colours = [{name: "Black", class: "black", colourFunction: () => {return "
 let percentage = 70;
 let size = 16;
 let currentColour = 0;
+let gridMouseDown = false;
 
 changeResolutionBtn.textContent += size;
 changeWidthBtn.textContent += percentage + "%";
@@ -83,7 +84,19 @@ function createGrid() {
       square.setAttribute("class", "square");
       square.style.width = newWidth;
       square.style.height = newWidth;
-      square.addEventListener("mouseenter", evt => evt.target.style.backgroundColor = colours[currentColour % colours.length].colourFunction());
+      square.addEventListener("mouseenter", evt => {
+        if (gridMouseDown) {
+          evt.target.style.backgroundColor = colours[currentColour % colours.length].colourFunction();
+        };
+      });
+      square.addEventListener("mousedown", evt => {
+        if (evt.button === 0) {
+          gridMouseDown = true;
+          evt.target.style.backgroundColor = colours[currentColour % colours.length].colourFunction(); // so square clicked on is coloured
+          evt.preventDefault();
+        }
+      });
+      window.addEventListener("mouseup", () => {if (gridMouseDown) gridMouseDown = false}); // so that any mouseup turns it off
       row.appendChild(square);
     };
     grid.appendChild(row);
