@@ -16,6 +16,7 @@ body {
 #grid {
   margin: auto;
   border: 2px solid black;
+  background-color: white;
 }
 
 #options {
@@ -35,7 +36,7 @@ button {
   padding: 4px;
 }
 
-.black {
+.black, .opaque {
   color: white;
   background-color: black;
 }
@@ -48,4 +49,9 @@ button {
 .erase {
   color: black;
   background: pink;
+}
+
+.darkening {
+  background-color: #ccc;
+  color: black
 }

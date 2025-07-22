@@ -2,20 +2,26 @@ const grid = document.querySelector("#grid");
 const changeResolutionBtn = document.querySelector(".change-resolution");
 const changeWidthBtn = document.querySelector(".change-width");
 const changeColourBtn = document.querySelector(".change-colour");
+const changeEffectBtn = document.querySelector(".change-darken");
 const clearScreenBtn = document.querySelector(".clear-screen");
 const colours = [{name: "Black", class: "black", colourFunction: () => {return "black"}},
                {name: "RGB", class: "rgb", colourFunction() {return `rgb(${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)})`}}, 
                {name: "Erase", class: "erase", colourFunction() {return "white"}}
+];
+const effects = [{name: "Opaque", class: "opaque", opacityIncrease: 1},
+                {name: "Darkening", class: "darkening", opacityIncrease: 0.1}
 ];
 
 let percentage = 50;
 let size = 16;
 let currentColour = 0;
 let gridMouseDown = false;
+let currentEffect = 0;
 
 changeResolutionBtn.textContent += size;
 changeWidthBtn.textContent += percentage + "%";
-changeColourBtn.textContent += colours[currentColour % 3].name;
+changeColourBtn.textContent += colours[currentColour % colours.length].name;
+changeEffectBtn.textContent += effects[currentEffect  % effects.length].name;
 
 window.addEventListener("resize", () => { 
   const allSquares = document.querySelectorAll(".square");
@@ -60,11 +66,21 @@ changeColourBtn.addEventListener("click", () => {
   changeColourBtn.classList.remove(colours[(currentColour + colours.length - 1) % colours.length].class);
   changeColourBtn.classList.add(colours[currentColour % colours.length].class);
 
-  let changeColourBtnText = changeColourBtn.textContent.split(" ")[0] + " " + colours[currentColour % colours.length].name;
+  let changeColourBtnText = changeColourBtn.textContent.split(": ")[0] + ": " + colours[currentColour % colours.length].name;
   changeColourBtn.textContent =  changeColourBtnText; 
 });
 
 clearScreenBtn.addEventListener("click", createGrid);
+
+changeEffectBtn.addEventListener("click", () => {
+  currentEffect++;
+
+  changeEffectBtn.classList.remove(effects[(currentEffect + effects.length - 1) % effects.length].class);
+  changeEffectBtn.classList.add(effects[currentEffect % effects.length].class);
+
+  let changeEffectBtnText = changeEffectBtn.textContent.split(": ")[0] + ": " + effects[currentEffect % effects.length].name;
+  changeEffectBtn.textContent =  changeEffectBtnText; 
+});
 
 function getUserInputNumber(low, high, display) {
   let num = NaN;
@@ -89,13 +105,15 @@ function createGrid() {
       square.style.height = newWidth;
       square.addEventListener("mouseenter", evt => {
         if (gridMouseDown) {
+          newOpacity = effects[currentEffect % effects.length].opacityIncrease + +evt.target.style.opacity;
+          evt.target.style.opacity = (newOpacity > 1 || colours[currentColour % colours.length].name === "Erase") ? 1 : newOpacity;
           evt.target.style.backgroundColor = colours[currentColour % colours.length].colourFunction();
         };
       });
       square.addEventListener("mousedown", evt => {
         if (evt.button === 0) {
           gridMouseDown = true;
-          evt.target.style.backgroundColor = colours[currentColour % colours.length].colourFunction(); // so square clicked on is coloured
+          evt.target.dispatchEvent(new Event("mouseenter")); // so square clicked on is coloured
           evt.preventDefault();
         }
       });
