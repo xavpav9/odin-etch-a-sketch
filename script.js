@@ -45,6 +45,7 @@ changeResolutionBtn.addEventListener("click", () => {
 
 
   createGrid();
+  doGreenPulse(changeResolutionBtn);
 });
 
 
@@ -57,6 +58,7 @@ changeWidthBtn.addEventListener("click", () => {
   changeWidthBtn.textContent = text.join(": ");
 
   setGridWidth();
+  doGreenPulse(changeWidthBtn);
 });
 
 
@@ -67,12 +69,15 @@ changeColourBtn.addEventListener("click", () => {
   changeColourBtn.classList.add(colours[currentColour % colours.length].class);
 
   let changeColourBtnText = changeColourBtn.textContent.split(": ")[0] + ": " + colours[currentColour % colours.length].name;
-  changeColourBtn.textContent =  changeColourBtnText; 
+  changeColourBtn.textContent = changeColourBtnText; 
 });
 
 clearScreenBtn.addEventListener("click", () => {
   let clearScreen = confirm("Are you sure that you want to clear the screen?");
-  if (clearScreen) createGrid();
+  if (clearScreen) {
+    createGrid();
+    doGreenPulse(clearScreenBtn);
+  };
 });
 
 changeEffectBtn.addEventListener("click", () => {
@@ -84,6 +89,13 @@ changeEffectBtn.addEventListener("click", () => {
   let changeEffectBtnText = changeEffectBtn.textContent.split(": ")[0] + ": " + effects[currentEffect % effects.length].name;
   changeEffectBtn.textContent =  changeEffectBtnText; 
 });
+
+function doGreenPulse(button) {
+  for (let i = 0; i <= 10; ++i) {
+    setTimeout(() => button.style.backgroundColor = `rgb(${Math.floor(240 - (240/10 * i))}, 240, ${Math.floor(240 - (240/10 * i))})`, i*50);   
+    setTimeout(() => button.style.backgroundColor = `rgb(${Math.floor(240/10 * i)}, 240, ${Math.floor(240/10 * i)})`, 500 + i*50);   
+  };
+};
 
 function getUserInputNumber(low, high, display) {
   let num = NaN;
