@@ -36,6 +36,10 @@ button {
   padding: 4px;
 }
 
+.clear-screen:hover, .change-width:hover, .change-resolution:hover {
+  background-color: #fff;
+}
+
 .black, .opaque {
   color: white;
   background-color: black;
