@@ -1,11 +1,12 @@
 const grid = document.querySelector("#grid");
 const changeResolutionBtn = document.querySelector(".change-resolution");
 const changeWidthBtn = document.querySelector(".change-width");
-const changeColourBtn = document.querySelector(".change-colour")
+const changeColourBtn = document.querySelector(".change-colour");
+const clearScreenBtn = document.querySelector(".clear-screen");
 const colours = [{name: "Black", class: "black", colourFunction: () => {return "black"}},
                {name: "RGB", class: "rgb", colourFunction() {return `rgb(${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)} ${Math.floor(Math.random() * 255)})`}}, 
                {name: "Erase", class: "erase", colourFunction() {return "white"}}
-]
+];
 
 let percentage = 70;
 let size = 16;
@@ -62,6 +63,8 @@ changeColourBtn.addEventListener("click", () => {
   let changeColourBtnText = changeColourBtn.textContent.split(" ")[0] + " " + colours[currentColour % colours.length].name;
   changeColourBtn.textContent =  changeColourBtnText; 
 });
+
+clearScreenBtn.addEventListener("click", createGrid);
 
 function getUserInputNumber(low, high, display) {
   let num = NaN;
