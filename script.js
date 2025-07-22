@@ -90,6 +90,11 @@ changeEffectBtn.addEventListener("click", () => {
   changeEffectBtn.textContent =  changeEffectBtnText; 
 });
 
+[changeResolutionBtn, changeWidthBtn, clearScreenBtn].forEach(button => {
+  button.addEventListener("mouseenter", () => button.style.backgroundColor = "white"); 
+  button.addEventListener("mouseleave", () => button.style.backgroundColor = "#f0f0f0"); 
+});
+
 function doGreenPulse(button) {
   for (let i = 0; i <= 10; ++i) {
     setTimeout(() => button.style.backgroundColor = `rgb(${Math.floor(240 - (240/10 * i))}, 240, ${Math.floor(240 - (240/10 * i))})`, i*50);   
