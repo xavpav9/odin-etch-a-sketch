@@ -8,7 +8,7 @@ const colours = [{name: "Black", class: "black", colourFunction: () => {return "
                {name: "Erase", class: "erase", colourFunction() {return "white"}}
 ];
 
-let percentage = 70;
+let percentage = 50;
 let size = 16;
 let currentColour = 0;
 let gridMouseDown = false;
@@ -30,7 +30,7 @@ createGrid();
 setGridWidth();
 
 changeResolutionBtn.addEventListener("click", () => {
-  let newSize = getUserInputNumber(1, 100, "number");
+  let newSize = getUserInputNumber(2, 64, "number");
   if (newSize === null) return;
   size = newSize;
   let text = changeResolutionBtn.textContent.split(": ");
@@ -43,7 +43,7 @@ changeResolutionBtn.addEventListener("click", () => {
 
 
 changeWidthBtn.addEventListener("click", () => {
-  let newPercentage = getUserInputNumber(1, 100, "pecentage");
+  let newPercentage = getUserInputNumber(25, 75, "pecentage");
   if (newPercentage === null) return;
   percentage = newPercentage;
   let text = changeWidthBtn.textContent.split(": ");
